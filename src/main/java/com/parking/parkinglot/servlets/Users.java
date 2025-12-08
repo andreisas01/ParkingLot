@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"READ_USERS"}), httpMethodConstraints = @HttpMethodConstraint(value = "POST", rolesAllowed = {"WRITE_USERS"}))
 @WebServlet(name = "Users", value = "/Users")
 public class Users extends HttpServlet {
     @Inject
@@ -17,14 +18,18 @@ public class Users extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse
-            response) throws ServletException, IOException {
+            response) {
         List<UserDto> users = usersBean.findAllUsers();
         request.setAttribute("users", users);
-        request.getRequestDispatcher("/WEB-INF/pages/users.jsp").forward(request, response);
+        try {
+            request.getRequestDispatcher("/WEB-INF/pages/users.jsp").forward(request, response);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse
-            response) throws ServletException, IOException {
+            response) {
     }
 }
