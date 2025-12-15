@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/src/main/java/com/parking/parkinglot/servlets/CarPhotos.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/com/parking/parkinglot/servlets/CarPhotos.java" />
+              <option name="originalContent" value="package com.parking.parkinglot.servlets;&#10;&#10;public class CarPhotos {&#10;}&#10;" />
+              <option name="updatedContent" value="package com.parking.parkinglot.servlets;&#10;&#10;import com.parking.parkinglot.common.CarPhotoDto;&#10;import com.parking.parkinglot.ejb.CarsBean;&#10;import jakarta.inject.Inject;&#10;import jakarta.servlet.ServletException;&#10;import jakarta.servlet.annotation.WebServlet;&#10;import jakarta.servlet.http.HttpServlet;&#10;import jakarta.servlet.http.HttpServletRequest;&#10;import jakarta.servlet.http.HttpServletResponse;&#10;&#10;import java.io.IOException;&#10;&#10;@WebServlet(name = &quot;CarPhotos&quot;, value = &quot;/CarPhotos&quot;)&#10;public class CarPhotos extends HttpServlet {&#10;&#10;    @Inject&#10;    CarsBean carsBean;&#10;&#10;    @Override&#10;    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {&#10;        Integer carId = Integer.parseInt(request.getParameter(&quot;id&quot;));&#10;        CarPhotoDto photo = carsBean.findPhotoByCarId(carId);&#10;        if (photo != null) {&#10;            response.setContentType(photo.getFileType());&#10;            response.setContentLength(photo.getFileContent().length);&#10;            response.getOutputStream().write(photo.getFileContent());&#10;        } else {&#10;            response.sendError(HttpServletResponse.SC_NOT_FOUND); // Error 404&#10;        }&#10;    }&#10;&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
