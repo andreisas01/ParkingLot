@@ -15,6 +15,10 @@ public class Car {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "photo_id")
+    private CarPhoto photo;
+
     public String getLicensePlate() {
         return licensePlate;
     }
@@ -32,6 +36,14 @@ public class Car {
     }
 
     private String parkingSpot;
+
+    public CarPhoto getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(CarPhoto photo) {
+        this.photo = photo;
+    }
 
     public User getOwner() {
         return owner;
